@@ -109,6 +109,7 @@ TEMPLATES = [
                 'oscar.apps.checkout.context_processors.checkout',
                 'oscar.apps.communication.notifications.context_processors.notifications',
                 'oscar.core.context_processors.metadata',
+                'homepage.context_processors.site_url',
             ],
         },
     },
@@ -204,3 +205,32 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Thumbnail settings
 THUMBNAIL_DEBUG = DEBUG
 THUMBNAIL_DUMMY = True
+
+
+
+# Email settings
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = config('EMAIL_HOST')
+    EMAIL_PORT = config('EMAIL_PORT', cast=int)
+    EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+    EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SUPPORT_EMAIL = config('SUPPORT_EMAIL', default='info@simplyevents.com.au')
+
+DELIVERY_COST=config('DELIVERY_COST', default=1.50)
+DEPOSIT=config('DEPOSIT', default=0.1)
+SYSTEM_NAME_SHORT = config('SYSTEM_NAME_SHORT', default='Simply Events')
+SYSTEM_NAME = config('SYSTEM_NAME', default='Simply Events')
+PUBLIC_URL = config('PUBLIC_URL', default='https://simplyevents.com.au')
+
+# PAYPAL
+PAYPAL_CLIENT_ID = config('PAYPAL_CLIENT_ID')
+PAYPAL_CLIENT_SECRET = config('PAYPAL_CLIENT_SECRET')
+PAYPAL_MODE = config('PAYPAL_MODE', default='sandbox')  # 'sandbox' or 'live'
+PAYPAL_RETURN_URL = config('PAYPAL_RETURN_URL', default='http://localhost:8002/payment/success/')
+PAYPAL_CANCEL_URL = config('PAYPAL_CANCEL_URL', default='http://localhost:8002/payment/cancel/')
+

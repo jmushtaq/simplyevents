@@ -5,19 +5,54 @@
     --nav-font: "Jost", sans-serif;
 }
 
+/* Navbar styles - common for both home and Oscar pages */
+#header .header,
 #top_page.accounts {
     background-color: #fff;
-    border-bottom: 1px solid #eee;
+    box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
 }
 
-#top_page .navbar-brand h1 {
+#header .logo,
+#top_page .navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+#header .sitename,
+#top_page .sitename {
     font-family: var(--nav-font);
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 24px;
+    font-weight: 700;
+    color: #0f394c;
     margin: 0;
-    color: #333;
 }
 
+#header .navmenu,
+#top_page .navmenu,
+#top_page .navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+#header .navmenu ul,
+#top_page .navbar-nav {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    gap: 20px;
+    margin-left: auto;
+}
+
+#header .navmenu ul li,
+#top_page .nav-item {
+    margin: 0;
+    position: relative;
+}
+
+#header .navmenu ul li a,
 #top_page .nav-link {
     font-family: var(--nav-font);
     font-size: 14px;
@@ -25,101 +60,63 @@
     text-transform: uppercase;
     color: var(--nav-menu-color);
     padding: 18px 15px;
+    text-decoration: none;
     transition: 0.3s;
 }
 
+#header .navmenu ul li a:hover,
+#header .navmenu ul li a.active,
 #top_page .nav-link:hover,
 #top_page .nav-link:focus {
     color: var(--nav-menu-hover-color);
 }
 
+/* Dropdown styles */
+#header .dropdown-menu,
+#top_page .dropdown-menu {
+    margin-top: 0;
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    border: 0;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1000;
+}
+
+#header .nav-item.dropdown:hover > .dropdown-menu,
 #top_page .nav-item.dropdown:hover > .dropdown-menu,
+#header .nav-item.dropdown.show > .dropdown-menu,
 #top_page .nav-item.dropdown.show > .dropdown-menu {
     display: block;
 }
 
-#top_page .dropdown-menu {
-    margin-top: 0;
-    border: 0;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
+#header .dropdown-menu li,
+#top_page .dropdown-menu li {
+    display: block;
+    width: 100%;
 }
 
+#header .dropdown-menu .dropdown-item,
 #top_page .dropdown-menu .dropdown-item {
     font-family: var(--nav-font);
     font-size: 15px;
+    display: block;
     padding: 10px 20px;
+    color: #212529;
+    text-decoration: none;
+    background: none;
+    border: 0;
 }
 
+#header .dropdown-menu .dropdown-item:hover,
 #top_page .dropdown-menu .dropdown-item:hover {
     background-color: #f8f9fa;
     color: var(--nav-menu-hover-color);
 }
 
-#header .navmenu ul {
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    gap: 20px;
-}
-
-#header .navmenu ul li {
-    margin: 0;
-    position: relative;
-}
-
-#header .navmenu ul li a {
-    color: var(--nav-menu-color);
-    text-decoration: none;
-    font-weight: 500;
-    padding: 8px 12px;
-    display: block;
-}
-
-#header .navmenu ul li a:hover,
-#header .navmenu ul li a.active {
-    color: var(--nav-menu-hover-color);
-}
-
-#header .dropdown-menu {
-    margin-top: 8px;
-    display: none !important;
-    position: absolute;
-    min-width: 160px;
-    z-index: 1000;
-}
-
-#header .nav-item.dropdown:hover > .dropdown-menu,
-#header .nav-item.dropdown:focus-within > .dropdown-menu,
-#header .nav-item.dropdown.show > .dropdown-menu {
-    display: block !important;
-}
-
-#header .dropdown-menu li {
-    display: block;
-    width: 100%;
-}
-
-#header .dropdown-menu .dropdown-item {
-    display: block;
-    width: 100%;
-    padding: 8px 16px;
-    clear: both;
-    font-weight: 400;
-    color: #212529;
-    text-align: inherit;
-    white-space: nowrap;
-    background: none;
-    border: 0;
-}
-
-#header .dropdown-menu .dropdown-item:hover {
-    background-color: #f8f9fa;
-}
-
-#header .dropdown-divider {
+#header .dropdown-divider,
+#top_page .dropdown-divider {
     height: 1px;
     margin: 8px 0;
     overflow: hidden;
@@ -131,17 +128,17 @@
 .container-lg,
 .container-md,
 .container-sm {
-    max-width: 1160px !important;
+    max-width: var(--container-max-width) !important;
     width: 100% !important;
 }
 
 #testimonials {
-    max-width: 1160px;
+    max-width: var(--container-max-width);
     margin: 0 auto;
 }
 
 #testimonials .testimonials-bg {
-    max-width: 1160px;
+    max-width: var(--container-max-width);
     margin: 0 auto;
     left: 0;
     right: 0;
