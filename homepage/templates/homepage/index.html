@@ -116,6 +116,26 @@
           <li><a href="#portfolio">Event Hire Range</a></li>
           <li><a href="#contact">Contact</a></li>
           <li><a href="#about">About</a></li>
+          {% if user.is_authenticated %}
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Admin
+                  {% if num_unread_notifications > 0 %}
+                      <span class="badge bg-warning">{{ num_unread_notifications }}</span>
+                  {% endif %}
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminDropdown">
+                  <li><a class="dropdown-item" href="{% url 'customer:summary' %}">My Account</a></li>
+                  {% if user.is_staff or perms.partner.dashboard_access %}
+                  <li><a class="dropdown-item" href="{% url 'dashboard:index' %}">Dashboard</a></li>
+                  {% endif %}
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'customer:logout' %}">Logout</a></li>
+              </ul>
+          </li>
+          {% else %}
+          <li><a href="{% url 'customer:login' %}">Login</a></li>
+          {% endif %}
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
