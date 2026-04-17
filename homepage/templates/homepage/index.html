@@ -222,43 +222,41 @@
           <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
             <li data-filter="*" class="filter-active">All</li>
             {% get_top_categories as categories %}
-            {% for category in categories %}
-                <li data-filter=".filter-{{ category.slug }}">{{ category.name }}</li>
+            {% for item in categories %}
+                <li data-filter=".filter-{{ item.category.slug }}">{{ item.category.name }}</li>
             {% endfor %}
           </ul>
 
           <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
             {% get_top_categories as categories %}
-            {% for category in categories %}
-              <!-- Display each category as a portfolio item -->
-              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-{{ category.slug }}">
+            {% for item in categories %}
+              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-{{ item.category.slug }}">
                 <div class="portfolio-content h-100">
                   <div class="image-wrapper">
-                    {% if category.image %}
-                      <img src="{% get_thumbnail_url category.image 'portfolio' %}" class="img-fluid" alt="{{ category.name }}">
-                    else %}
-                      <img src="{% static 'assets/img/portfolio/placeholder.jpg' %}" class="img-fluid" alt="{{ category.name }}">
+                    {% if item.image %}
+                      <img src="{{ item.image.original.url }}" class="img-fluid" alt="{{ item.category.name }}">
+                    {% else %}
+                      <img src="{% static 'assets/img/portfolio/placeholder.jpg' %}" class="img-fluid" alt="{{ item.category.name }}">
                     {% endif %}
                   </div>
                   <div class="portfolio-info">
-                    <h4>{{ category.name }}</h4>
-                    <p>Explore our {{ category.name|lower }} collection</p>
+                    <h4>{{ item.category.name }}</h4>
+                    <p>Explore our {{ item.category.name|lower }} collection</p>
                     <div class="portfolio-links">
-                      {% if category.image %}
-                        <a href="{% get_thumbnail_url category.image 'portfolio_large' %}" title="{{ category.name }}" data-gallery="portfolio-gallery-{{ category.slug }}" class="glightbox preview-link">
+                      {% if item.image %}
+                        <a href="{{ item.image.original.url }}" title="{{ item.category.name }}" data-gallery="portfolio-gallery-{{ item.category.slug }}" class="glightbox preview-link">
                           <i class="bi bi-zoom-in"></i>
                         </a>
                       {% endif %}
-                      <!-- Link to category page -->
-                      <a href="{% url 'catalogue:category' category_slug=category.slug pk=category.id %}" title="Browse {{ category.name }}" class="details-link">
+                      <a href="{{ item.category.get_absolute_url }}" title="Browse {{ item.category.name }}" class="details-link">
                         <i class="bi bi-grid-3x3-gap-fill"></i>
                       </a>
                     </div>
                   </div>
                 </div>
-              </div><!-- End Portfolio Item -->
+              </div>
             {% endfor %}
-          </div><!-- End Portfolio Container -->
+          </div>
 
         </div>
 

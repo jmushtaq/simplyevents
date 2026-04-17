@@ -72,6 +72,10 @@ INSTALLED_APPS = [
     'sorl.thumbnail',   # Default thumbnail backend, can be replaced
     'django_tables2',
     'django_extensions',
+    'easy_thumbnails',
+
+    # Local apps
+    'homepage',
 ]
 
 SITE_ID = 1

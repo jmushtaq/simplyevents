@@ -1,18 +1,26 @@
 from django import template
-from oscar.apps.catalogue.models import Category, Product
-from easy_thumbnails.files import get_thumbnailer
+from oscar.apps.catalogue.models import Category, ProductCategory, ProductImage
 
 register = template.Library()
 
 @register.simple_tag
 def get_top_categories():
-    return Category.objects.filter(depth=1)
+    cats = Category.objects.filter(depth=2, is_public=True)
+    result = []
+    for cat in cats:
+        pc = ProductCategory.objects.filter(category=cat, product__is_public=True).select_related('product').first()
+        img = None
+        if pc and pc.product:
+            img = pc.product.images.first()
+        result.append({
+            'category': cat,
+            'image': img
+        })
+    return result
 
 @register.simple_tag
 def get_category_products(category, limit=3):
-    """
-    Get products for a specific category
-    """
+    from oscar.apps.catalogue.models import Product
     products = Product.objects.filter(
         categories=category,
         is_public=True
@@ -21,9 +29,9 @@ def get_category_products(category, limit=3):
 
 @register.simple_tag
 def get_thumbnail_url(image, size='portfolio'):
-    """Get thumbnail URL for consistent sizing"""
     if not image:
         return None
+    from easy_thumbnails.files import get_thumbnailer
     try:
         thumbnail_options = {'size': (400, 300), 'crop': True}
         if size == 'portfolio_small':
@@ -33,5 +41,4 @@ def get_thumbnail_url(image, size='portfolio'):
         thumbnail_url = get_thumbnailer(image).get_thumbnail(thumbnail_options).url
         return thumbnail_url
     except Exception as e:
-        # Fallback to original image if thumbnail generation fails
-        return image.url
+        return image.original.url if hasattr(image, 'original') else None
