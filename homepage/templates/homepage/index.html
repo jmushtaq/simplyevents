@@ -33,6 +33,9 @@
   <!-- Main CSS File -->
   <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
 
+  <!-- Custom CSS - container width configuration -->
+  <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
   <style>
     /* Consistent image sizing for portfolio items */
     .portfolio-content {
@@ -99,47 +102,51 @@
 
 <body class="index-page">
 
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+  <header id="header" class="header">
+    <div class="container">
+      <div class="page_inner">
+        <div class="row justify-content-between align-items-center">
 
         <a href="{% url 'homepage:homepage' %}" class="logo d-flex align-items-center">
           {% comment %}
           <img src="{% static 'assets/img/logo.png' %}" alt="">
           {% endcomment %}
         <!-- Uncomment the line below if you also wish to use text logo -->
-        <h1 class="sitename">{{DJANGO_SETTINGS.SYSTEM_NAME}}</h1>
-      </a>
+        <h1 class="sitename mb-0">{{DJANGO_SETTINGS.SYSTEM_NAME}}</h1>
+        </a>
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="" class="active">Home</a></li>
-          <li><a href="#portfolio">Event Hire Range</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="#about">About</a></li>
-          {% if user.is_authenticated %}
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Admin
-                  {% if num_unread_notifications > 0 %}
-                      <span class="badge bg-warning">{{ num_unread_notifications }}</span>
-                  {% endif %}
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminDropdown">
-                  <li><a class="dropdown-item" href="{% url 'customer:summary' %}">My Account</a></li>
-                  {% if user.is_staff or perms.partner.dashboard_access %}
-                  <li><a class="dropdown-item" href="{% url 'dashboard:index' %}">Dashboard</a></li>
-                  {% endif %}
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="{% url 'customer:logout' %}">Logout</a></li>
-              </ul>
-          </li>
-          {% else %}
-          <li><a href="{% url 'customer:login' %}">Login</a></li>
-          {% endif %}
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="" class="active">Home</a></li>
+            <li><a href="#portfolio">Event Hire Range</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#about">About</a></li>
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Admin
+                    {% if num_unread_notifications > 0 %}
+                        <span class="badge bg-warning">{{ num_unread_notifications }}</span>
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminDropdown">
+                    <li><a class="dropdown-item" href="{% url 'customer:summary' %}">My Account</a></li>
+                    {% if user.is_staff or perms.partner.dashboard_access %}
+                    <li><a class="dropdown-item" href="{% url 'dashboard:index' %}">Dashboard</a></li>
+                    {% endif %}
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'customer:logout' %}">Logout</a></li>
+                </ul>
+            </li>
+            {% else %}
+            <li><a href="{% url 'customer:login' %}">Login</a></li>
+            {% endif %}
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
 
+        </div>
+      </div>
     </div>
   </header>
 
@@ -221,7 +228,6 @@
           </div>
           <div class="swiper-pagination"></div>
         </div>
-
       </div>
 
     </section><!-- /Testimonials Section -->
@@ -229,15 +235,15 @@
     <!-- Portfolio Section -->
     <section id="portfolio" class="portfolio section">
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Event Hire Range</h2>
-        <p>Browse our extensive range of event hire equipment</p>
-      </div><!-- End Section Title -->
-
       <div class="container">
 
-        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+        <!-- Section Title -->
+          <div class="section-title" data-aos="fade-up">
+            <h2>Event Hire Range</h2>
+            <p>Browse our extensive range of event hire equipment</p>
+          </div><!-- End Section Title -->
+
+          <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
 
           <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
             <li data-filter="*" class="filter-active">All</li>
@@ -279,7 +285,6 @@
           </div>
 
         </div>
-
       </div>
 
     </section><!-- /Portfolio Section -->

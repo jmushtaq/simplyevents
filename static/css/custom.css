@@ -1,0 +1,24 @@
+:root {
+    --container-max-width: 1160px;
+}
+
+/* Override Bootstrap container widths */
+.container,
+.container-lg,
+.container-md,
+.container-sm {
+    max-width: 1160px !important;
+    width: 100% !important;
+}
+
+#testimonials {
+    max-width: 1160px;
+    margin: 0 auto;
+}
+
+#testimonials .testimonials-bg {
+    max-width: 1160px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
