@@ -15,11 +15,8 @@ class HomeTestView(generic.ListView):
 
 
 class HomeView(generic.ListView):
-    ''' http://localhost:8000/home/  '''
-#    template_name = "homepage/starter-page.html"
-#    context_object_name = "homepage/starter-page.html"
-    context_object_name = "homepage/index.html"
-    template_name = "homepage/index.html"
+    ''' http://localhost:8000/  '''
+    template_name = "oscar/home/index.html"
 
     def get_queryset(self):
         return None

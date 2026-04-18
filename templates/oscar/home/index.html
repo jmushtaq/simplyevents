@@ -1,0 +1,408 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load custom_category_tags %}
+
+{% block title %}{{DJANGO_SETTINGS.SYSTEM_NAME}}{% endblock %}
+
+{% block extrahead %}
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block extrastyles %}
+{{ block.super }}
+<style>
+.portfolio-content {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.portfolio-content .image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 75%;
+    overflow: hidden;
+    background-color: #f5f5f5;
+}
+
+.portfolio-content .image-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.portfolio-content:hover .image-wrapper img {
+    transform: scale(1.05);
+}
+
+.portfolio-item {
+    margin-bottom: 30px;
+}
+
+.portfolio-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio-info {
+    flex: 1;
+    padding: 20px;
+    background: #fff;
+}
+
+.portfolio-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 40px;
+    list-style: none;
+    padding: 0;
+}
+
+.portfolio-filters li {
+    display: inline-block;
+}
+
+.portfolio-filters li a {
+    color: #444 !important;
+    font-family: "Jost", sans-serif !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    padding: 8px 16px !important;
+    transition: 0.3s;
+    display: inline-block !important;
+    border-bottom: 2px solid transparent !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+}
+
+.portfolio-filters li a:hover,
+.portfolio-filters li a.filter-active {
+    color: #49b5e7 !important;
+    border-bottom-color: #49b5e7 !important;
+}
+
+.portfolio-links {
+    display: flex;
+    gap: 15px;
+    position: relative;
+    z-index: 100;
+    margin-top: 10px;
+}
+
+.portfolio-links a {
+    color: #49b5e7;
+    font-size: 20px;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px;
+    position: relative;
+    z-index: 100;
+    pointer-events: auto;
+}
+
+.portfolio-links a:hover {
+    color: #0f394c;
+}
+
+.portfolio-links a i {
+    position: relative;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.details-link {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.preview-link {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* Ensure isotope items have proper positioning */
+.isotope-item {
+    position: relative;
+    z-index: 1;
+}
+
+.isotope-item .portfolio-content {
+    position: relative;
+    z-index: 1;
+}
+
+.details-link {
+    cursor: pointer;
+}
+
+.preview-link {
+    cursor: pointer;
+}
+
+.testimonials {
+    position: relative;
+    padding: 80px 0;
+    background-color: #f5fbff;
+}
+
+.testimonials .testimonials-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.testimonials .section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.testimonials .section-title h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0f394c;
+    margin-bottom: 10px;
+    font-family: "Jost", sans-serif;
+}
+
+.testimonials .section-title p {
+    color: #444;
+    font-size: 16px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-title h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0f394c;
+    margin-bottom: 10px;
+    font-family: "Jost", sans-serif;
+}
+
+.section-title p {
+    color: #444;
+    font-size: 16px;
+}
+
+.footer {
+    padding: 40px 0;
+    background-color: #fff;
+    text-align: center;
+    border-top: 1px solid #eee;
+    margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+    .portfolio-content .image-wrapper {
+        padding-top: 66.67%;
+    }
+}
+
+@media (max-width: 576px) {
+    .portfolio-content .image-wrapper {
+        padding-top: 100%;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content_wrapper %}
+<main class="main">
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials section light-background">
+        <img src="{% static 'assets/img/event_image_1.jpg' %}" class="testimonials-bg" alt="">
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="swiper init-swiper">
+                <script type="application/json" class="swiper-config">
+                    {
+                        "loop": true,
+                        "speed": 600,
+                        "autoplay": {
+                            "delay": 5000
+                        },
+                        "slidesPerView": "auto",
+                        "pagination": {
+                            "el": ".swiper-pagination",
+                            "type": "bullets",
+                            "clickable": true
+                        }
+                    }
+                </script>
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <img src="{% static 'assets/img/event_image_1.jpg' %}" class="testimonial-img" alt="">
+                            <h3>Saul Goodman</h3>
+                            <h4>Ceo &amp; Founder</h4>
+                            <div class="stars">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                            </div>
+                            <p>
+                                <i class="bi bi-quote quote-icon-left"></i>
+                                <span>Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.</span>
+                                <i class="bi bi-quote quote-icon-right"></i>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <img src="{% static 'assets/img/event_image_2.jpg' %}" class="testimonial-img" alt="">
+                            <h3>Sara Wilsson</h3>
+                            <h4>Designer</h4>
+                            <div class="stars">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                            </div>
+                            <p>
+                                <i class="bi bi-quote quote-icon-left"></i>
+                                <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
+                                <i class="bi bi-quote quote-icon-right"></i>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <img src="{% static 'assets/img/event_image_3.jpg' %}" class="testimonial-img" alt="">
+                            <h3>Django Oscar</h3>
+                            <h4>Web Dev</h4>
+                            <div class="stars">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                            </div>
+                            <p>
+                                <i class="bi bi-quote quote-icon-left"></i>
+                                <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
+                                <i class="bi bi-quote quote-icon-right"></i>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Event Hire Range</h2>
+                <p>Browse our extensive range of event hire equipment</p>
+            </div>
+
+            <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+                <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+                    <li><a href="#" data-filter="*" class="filter-active">All</a></li>
+                    {% get_top_categories as categories %}
+                    {% for item in categories %}
+                        <li><a href="#" data-filter=".filter-{{ item.category.slug }}">{{ item.category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+
+                <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+                    {% get_top_categories as categories %}
+                    {% for item in categories %}
+                        <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-{{ item.category.slug }}">
+                            <div class="portfolio-content h-100">
+                                <div class="image-wrapper">
+                                    {% if item.image %}
+                                        <img src="{{ item.image.original.url }}" class="img-fluid" alt="{{ item.category.name }}">
+                                    {% else %}
+                                        <img src="{% static 'assets/img/portfolio/placeholder.jpg' %}" class="img-fluid" alt="{{ item.category.name }}">
+                                    {% endif %}
+                                </div>
+                                <div class="portfolio-info">
+                                    <h4>{{ item.category.name }}</h4>
+                                    <p>Explore our {{ item.category.name|lower }} collection</p>
+                                    <div class="portfolio-links">
+                                        {% if item.image %}
+                                            <a href="{{ item.image.original.url }}" title="{{ item.category.name }}" data-gallery="portfolio-gallery-{{ item.category.slug }}" class="glightbox preview-link">
+                                                <i class="bi bi-zoom-in"></i>
+                                            </a>
+                                        {% endif %}
+                                        <a href="{{ item.category.get_absolute_url }}" title="Browse {{ item.category.name }}" class="details-link">
+                                            <i class="bi bi-grid-3x3-gap-fill"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer id="footer" class="footer">
+    <div class="container copyright text-center mt-4">
+        <p>&copy; <span>Copyright</span> <strong class="px-1 sitename">{{DJANGO_SETTINGS.SYSTEM_NAME}}</strong> <span>All Rights Reserved 2025</span></p>
+    </div>
+</footer>
+{% endblock %}
+
+{% block extrascripts %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Filter click handlers - pure JS fallback
+    var filterLinks = document.querySelectorAll('.portfolio-filters a');
+    console.log('Filter links found:', filterLinks.length);
+    
+    filterLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Filter clicked:', this.getAttribute('data-filter'));
+            
+            // Remove active class from all filters
+            filterLinks.forEach(function(item) {
+                item.classList.remove('filter-active');
+            });
+            
+            // Add active class to clicked filter
+            this.classList.add('filter-active');
+            
+            // Get filter value
+            var filterValue = this.getAttribute('data-filter');
+            
+            // Filter items manually
+            document.querySelectorAll('.isotope-item').forEach(function(item) {
+                if (filterValue === '*') {
+                    item.style.display = 'block';
+                } else if (item.classList.contains(filterValue.substring(1))) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -2,11 +2,8 @@
 {% load static %}
 {% load i18n %}
 
-{% block styles %}
-    <link rel="stylesheet" type="text/css" href="{% static "oscar/css/styles.css" %}" />
-{% endblock %}
-
 {% block extrastyles %}
+    <link rel="stylesheet" type="text/css" href="{% static "oscar/css/styles.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "css/custom.css" %}" />
 {% endblock %}
 
@@ -48,7 +45,6 @@
 {% endblock %}
 
 {% block extrascripts %}
-    {% include "oscar/partials/extrascripts.html" %}
     {{ block.super }}
 {% endblock %}
 
