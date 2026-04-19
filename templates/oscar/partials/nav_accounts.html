@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load basket_tags %}
 
 <nav id="top_page" class="navbar navbar-expand-lg accounts">
     <div class="container">
@@ -6,6 +7,14 @@
             <a href="{% url 'homepage:homepage' %}" class="navbar-brand">
                 <h4 class="sitename mb-0">{{DJANGO_SETTINGS.SYSTEM_NAME}}</h4>
             </a>
+
+            <div class="navbar-brand hire-date-selector">
+                <button type="button" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#hireDateModal" id="selectDatesBtn">
+                    <i class="bi bi-calendar-range"></i>
+                    <span id="selectedDatesDisplay">{% trans "Select Dates" %}</span>
+                </button>
+            </div>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".account-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

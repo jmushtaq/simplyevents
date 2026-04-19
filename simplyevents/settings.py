@@ -36,17 +36,17 @@ INSTALLED_APPS = [
 
     'oscar.config.Shop',
     'oscar.apps.analytics.apps.AnalyticsConfig',
-    'oscar.apps.checkout.apps.CheckoutConfig',
+    'custom.checkout.apps.CheckoutConfig',
     'oscar.apps.address.apps.AddressConfig',
     'oscar.apps.shipping.apps.ShippingConfig',
     'oscar.apps.catalogue.apps.CatalogueConfig',
     'oscar.apps.catalogue.reviews.apps.CatalogueReviewsConfig',
     'oscar.apps.communication.apps.CommunicationConfig',
-    'oscar.apps.partner.apps.PartnerConfig',
-    'oscar.apps.basket.apps.BasketConfig',
+    'custom.partner.apps.PartnerConfig',
+    'custom.basket.apps.BasketConfig',
     'oscar.apps.payment.apps.PaymentConfig',
     'oscar.apps.offer.apps.OfferConfig',
-    'oscar.apps.order.apps.OrderConfig',
+    'custom.order.apps.OrderConfig',
     'oscar.apps.customer.apps.CustomerConfig',
     'oscar.apps.search.apps.SearchConfig',
     'oscar.apps.voucher.apps.VoucherConfig',
@@ -166,6 +166,9 @@ OSCAR_HOMEPAGE = '/'
 
 # Use AUD currency
 OSCAR_DEFAULT_CURRENCY = 'AUD'
+
+# Use custom hire strategy
+OSCAR_STRATEGY_SELECTOR = 'custom.partner.strategy.HireSelector'
 
 
 # Internationalization

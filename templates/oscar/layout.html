@@ -6,10 +6,12 @@
     <link rel="stylesheet" type="text/css" href="{% static "oscar/css/styles.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "css/custom.css" %}" />
     <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
 {% endblock %}
 
 {% block layout %}
     {% include "oscar/partials/nav_accounts.html" %}
+    {% include "oscar/partials/hire_date_modal.html" %}
 
     {# Main content of page - other layout templates may override this block #}
     {% block content_wrapper %}
@@ -43,6 +45,10 @@
     <script src="{% static "oscar/js/bootstrap4/bootstrap.bundle.min.js" %}"></script>
     <!-- Oscar -->
     <script src="{% static "oscar/js/oscar/ui.js" %}"></script>
+    <!-- Flatpickr for date selection -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+    <!-- Hire date selector -->
+    <script src="{% static 'js/hire_date_selector.js' %}"></script>
 {% endblock %}
 
 {% block extrascripts %}

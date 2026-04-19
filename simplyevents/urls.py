@@ -9,6 +9,9 @@ urlpatterns = [
     # Homepage
     path('', include('homepage.urls')),
 
+    # Order API
+    path('', include('custom.order.api.urls')),
+
     # The Django admin is not officially supported; expect breakage.
     # Nonetheless, it's often useful for debugging.
 
