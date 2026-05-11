@@ -1,6 +1,6 @@
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.urls import path
+from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext_lazy as _
 
 from oscar.core.application import OscarConfig
@@ -18,59 +18,35 @@ class CheckoutConfig(OscarConfig):
     def ready(self):
         self.index_view = get_class("checkout.views", "IndexView")
         self.shipping_address_view = get_class("checkout.views", "ShippingAddressView")
-        self.user_address_update_view = get_class(
-            "checkout.views", "UserAddressUpdateView"
-        )
-        self.user_address_delete_view = get_class(
-            "checkout.views", "UserAddressDeleteView"
-        )
+        self.user_address_update_view = get_class("checkout.views", "UserAddressUpdateView")
+        self.user_address_delete_view = get_class("checkout.views", "UserAddressDeleteView")
         self.shipping_method_view = get_class("checkout.views", "ShippingMethodView")
         self.payment_method_view = get_class("checkout.views", "PaymentMethodView")
         self.payment_details_view = get_class("checkout.views", "PaymentDetailsView")
         self.thankyou_view = get_class("checkout.views", "ThankYouView")
+        self.paypal_return_view = get_class("checkout.views", "PayPalReturnView")
+        self.paypal_cancel_view = get_class("checkout.views", "PayPalCancelView")
 
     def get_urls(self):
+        from custom.checkout import views as checkout_views
+        
         urls = [
             path("", self.index_view.as_view(), name="index"),
             # Shipping/user address views
-            path(
-                "shipping-address/",
-                self.shipping_address_view.as_view(),
-                name="shipping-address",
-            ),
-            path(
-                "user-address/edit/<int:pk>/",
-                self.user_address_update_view.as_view(),
-                name="user-address-update",
-            ),
-            path(
-                "user-address/delete/<int:pk>/",
-                self.user_address_delete_view.as_view(),
-                name="user-address-delete",
-            ),
-            # Shipping method views
-            path(
-                "shipping-method/",
-                self.shipping_method_view.as_view(),
-                name="shipping-method",
-            ),
-            # Payment views
-            path(
-                "payment-method/",
-                self.payment_method_view.as_view(),
-                name="payment-method",
-            ),
-            path(
-                "payment-details/",
-                self.payment_details_view.as_view(),
-                name="payment-details",
-            ),
+            path("shipping-address/", self.shipping_address_view.as_view(), name="shipping-address"),
+            path("user-address/edit/<int:pk>/", self.user_address_update_view.as_view(), name="user-address-update"),
+            path("user-address/delete/<int:pk>/", self.user_address_delete_view.as_view(), name="user-address-delete"),
+            # Shipping method
+            path("shipping-method/", self.shipping_method_view.as_view(), name="shipping-method"),
+            # Payment
+            path("payment-method/", self.payment_method_view.as_view(), name="payment-method"),
+            path("payment-details/", self.payment_details_view.as_view(), name="payment-details"),
+            # PayPal - use function directly
+            path("paypal/", checkout_views.paypal_initiate, name="paypal-initiate"),
+            path("paypal/return/", self.paypal_return_view.as_view(), name="paypal-return"),
+            path("paypal/cancel/", self.paypal_cancel_view.as_view(), name="paypal-cancel"),
             # Preview and thankyou
-            path(
-                "preview/",
-                self.payment_details_view.as_view(preview=True),
-                name="preview",
-            ),
+            path("preview/", self.payment_details_view.as_view(preview=True), name="preview"),
             path("thank-you/", self.thankyou_view.as_view(), name="thank-you"),
         ]
         return self.post_process_urls(urls)

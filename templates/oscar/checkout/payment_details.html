@@ -1,0 +1,41 @@
+{% extends "oscar/checkout/checkout.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Payment details" %}{% endblock %}
+
+{% block checkout_nav %}
+    {% include 'oscar/checkout/nav.html' with step=3 %}
+{% endblock %}
+
+{% block checkout_title %}{% trans "Payment details" %}{% endblock %}
+
+{% block payment_details %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3>{% trans "Pay with PayPal" %}</h3>
+                </div>
+                <div class="card-body text-center py-5">
+                    <p class="mb-4">{% trans "Click the button below to pay with your PayPal account" %}</p>
+                    
+                    <form action="{% url 'checkout:paypal-initiate' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fab fa-paypal"></i>
+                            {% trans "Pay with PayPal" %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-3">
+            <a href="{% url 'checkout:preview' %}" class="btn btn-outline-secondary">
+                {% trans "Continue to order preview" %}
+            </a>
+        </div>
+    </div>
+{% endblock %}

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'oscar.apps.search.apps.SearchConfig',
     'oscar.apps.voucher.apps.VoucherConfig',
     'oscar.apps.wishlists.apps.WishlistsConfig',
+    # 'paypal',  # Disabled - not compatible with Django 5
     'oscar.apps.dashboard.apps.DashboardConfig',
     'oscar.apps.dashboard.reports.apps.ReportsDashboardConfig',
     'oscar.apps.dashboard.users.apps.UsersDashboardConfig',
@@ -238,6 +239,11 @@ PUBLIC_URL = config('PUBLIC_URL', default='https://simplyevents.com.au')
 PAYPAL_CLIENT_ID = config('PAYPAL_CLIENT_ID')
 PAYPAL_CLIENT_SECRET = config('PAYPAL_CLIENT_SECRET')
 PAYPAL_MODE = config('PAYPAL_MODE', default='sandbox')  # 'sandbox' or 'live'
-PAYPAL_RETURN_URL = config('PAYPAL_RETURN_URL', default='http://localhost:8002/payment/success/')
-PAYPAL_CANCEL_URL = config('PAYPAL_CANCEL_URL', default='http://localhost:8002/payment/cancel/')
+PAYPAL_RETURN_URL = config('PAYPAL_RETURN_URL', default='http://localhost:8002/checkout/paypal/return/')
+PAYPAL_CANCEL_URL = config('PAYPAL_CANCEL_URL', default='http://localhost:8002/checkout/paypal/cancel/')
+
+# Enable guest checkout (no login required)
+OSCAR_ALLOW_ANON_CHECKOUT = True
+
+# Remove Oscar PayPal settings (not used)
 
